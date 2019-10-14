@@ -13,7 +13,7 @@ from tqdm import tqdm
 from imutils.video import VideoStream
 import pickle
 
-IMG_SIZE = 224
+IMG_SIZE = 300
 LR = 1e-3
 
 faceList = []
@@ -78,7 +78,7 @@ while True:
  
     # detect faces in the grayscale frame
     rects = detector.detectMultiScale(
-        cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), scaleFactor=1.1, 
+        cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), scaleFactor=1.1, 
         minNeighbors=5, minSize=(30, 30))
  
     # loop over the face detections and draw them on the frame
@@ -86,7 +86,7 @@ while True:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         cropped = frame[y:y+h,x:x+w]
-        grey = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
+        grey = cv2.cvtColor(cropped, cv2.COLOR_BGR2RGB)
 
         img = cv2.resize(grey, (IMG_SIZE, IMG_SIZE)) 
         data = np.array(img).reshape(-1, IMG_SIZE, IMG_SIZE, 1) 
